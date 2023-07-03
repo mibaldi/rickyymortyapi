@@ -1,0 +1,81 @@
+import com.mibaldi.rickyymorty.buildsrc.Libs
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    namespace 'com.mibaldi.rickyymorty'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.mibaldi.rickyymorty"
+        minSdk 29
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        dataBinding true
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+
+    implementation project(":data")
+    implementation project(":domain")
+    implementation project(":usecases")
+
+    implementation Libs.AndroidX.coreKtx
+    implementation Libs.AndroidX.appCompat
+    implementation Libs.AndroidX.recyclerView
+    implementation Libs.AndroidX.material
+    implementation Libs.AndroidX.constraintLayout
+
+    implementation Libs.AndroidX.Activity.ktx
+
+    implementation Libs.AndroidX.Lifecycle.viewmodelKtx
+    implementation Libs.AndroidX.Lifecycle.runtimeKtx
+
+    implementation Libs.AndroidX.Navigation.fragmentKtx
+    implementation Libs.AndroidX.Navigation.uiKtx
+
+    implementation Libs.AndroidX.Room.runtime
+    implementation Libs.AndroidX.Room.ktx
+    kapt Libs.AndroidX.Room.compiler
+
+    implementation Libs.playServicesLocation
+
+    implementation Libs.Glide.glide
+    kapt Libs.Glide.compiler
+
+    implementation Libs.OkHttp3.loginInterceptor
+    implementation Libs.Retrofit.retrofit
+    implementation Libs.Retrofit.converterGson
+
+    implementation Libs.Arrow.core
+
+    implementation Libs.Hilt.android
+    kapt Libs.Hilt.compiler
+}
