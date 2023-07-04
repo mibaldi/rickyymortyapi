@@ -1,7 +1,6 @@
 package com.mibaldi.rickyymorty.ui.main
 
 import android.util.Log
-import android.view.View
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,16 +32,16 @@ class MainViewModel @Inject constructor(
     var isLastPage = false
 
     init {
-        getCharaters(1)
+        getCharacters(1)
     }
 
-    fun getCharaters(page: Int,filter: Map<String,String>? = null){
+    fun getCharacters(page: Int, filter: Map<String,String>? = null){
         viewModelScope.launch {
             val generateFilters = generateFilters(filter)
             _state.value = _state.value.copy(loading = true)
             getCharactersUseCase.getCharacters(page,generateFilters)
                 .fold(
-                    ifLeft = {cause -> _state.update { it.copy(error = cause) }},
+                    ifLeft = {cause -> _state.update { it.copy(error = cause, loading = false) }},
                     ifRight = {result ->
                         _state.update { UiState(myCharacters = result.results) }
                         pagesGenerator(result.info)
@@ -80,14 +79,14 @@ class MainViewModel @Inject constructor(
 
     fun loadNextItems(){
         if (!isLastPage){
-            getCharaters(currentPage+1)
+            getCharacters(currentPage+1)
         } else {
             _pages.update { it.copy(next = false) }
         }
     }
     fun loadPrevItems(){
         if (currentPage != 1){
-            getCharaters(currentPage-1)
+            getCharacters(currentPage-1)
         } else {
             _pages.update { it.copy(prev = false) }
         }
@@ -97,6 +96,20 @@ class MainViewModel @Inject constructor(
             lastFilterMap = options
         }
         return lastFilterMap
+    }
+    var currentStatusFilter = ""
+    var currentGenderFilter = ""
+    fun addFilters(status:String,gender:String){
+        currentStatusFilter = if (status== "all") {
+            ""
+        } else status
+        currentGenderFilter = if (gender == "all") {
+            ""
+        } else gender
+
+        val mapOfStatus = mapOf(Pair("status", currentStatusFilter))
+        val mapOfGender = mapOf(Pair("gender", currentGenderFilter))
+        lastFilterMap = lastFilterMap + mapOfStatus + mapOfGender
     }
     data class UiState(
         val loading: Boolean = false,
