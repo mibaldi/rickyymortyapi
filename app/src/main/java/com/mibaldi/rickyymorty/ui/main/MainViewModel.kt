@@ -23,7 +23,7 @@ class MainViewModel @Inject constructor(
     private val _info = MutableStateFlow<Info?>(null)
     val info: StateFlow<Info?> = _info.asStateFlow()
     init {
-        getCharaters(0)
+        getCharaters(1)
     }
 
     fun getCharaters(page: Int,filter: Map<String,String>? = emptyMap()){

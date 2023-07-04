@@ -1,6 +1,8 @@
 package com.mibaldi.rickyymorty.ui.common
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +19,9 @@ import com.mibaldi.rickyymorty.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import com.mibaldi.rickyymorty.domain.Error
+import com.mibaldi.rickyymorty.domain.MyCharacter
+import com.mibaldi.rickyymorty.ui.detail.DetailActivity
+
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): View =
     LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 
@@ -49,4 +54,10 @@ fun Context.errorToString(error: Error) = when (error) {
 val Context.app: App get() = applicationContext as App
 fun ImageView.loadUrl(url: String) {
     Glide.with(context).load(url).into(this)
+}
+
+fun Activity.goToDetail(characterID: Int) {
+    val intent = Intent(this, DetailActivity::class.java)
+    intent.putExtra("characterID", characterID)
+    startActivity(intent)
 }

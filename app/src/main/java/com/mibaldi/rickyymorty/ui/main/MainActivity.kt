@@ -10,13 +10,14 @@ import com.mibaldi.rickyymorty.databinding.ActivityMainBinding
 import com.mibaldi.rickyymorty.ui.common.launchAndCollect
 import dagger.hilt.android.AndroidEntryPoint
 import com.mibaldi.rickyymorty.ui.common.errorToString
+import com.mibaldi.rickyymorty.ui.common.goToDetail
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding : ActivityMainBinding
     private val adapter = CharacterAdapter{
-        Toast.makeText(this,"${it.name}", Toast.LENGTH_SHORT).show()
+        this.goToDetail(it.id)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

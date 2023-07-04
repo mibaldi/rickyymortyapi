@@ -17,6 +17,12 @@ class CharacterServerDataSource @Inject constructor(private val remoteService: R
             .toDomainModel()
     }
 
+    override suspend fun getCharacter(id: Int): Either<Error, MyCharacter> = tryCall{
+        remoteService
+            .character(id)
+            .toDomainModel()
+    }
+
     private fun RemoteResult.toDomainModel(): Result {
         return Result(info.toDomainModel(),results.map { it.toDomainModel() })
     }

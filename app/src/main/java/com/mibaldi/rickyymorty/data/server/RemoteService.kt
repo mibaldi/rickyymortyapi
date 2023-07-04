@@ -8,4 +8,7 @@ interface RemoteService {
 
     @GET("character")
     suspend fun listOfCharacters(@QueryMap options: Map<String,String>?):RemoteResult
+
+    @GET("character/{id}")
+    suspend fun character(@Path("id") id: Int):RemoteCharacter
 }

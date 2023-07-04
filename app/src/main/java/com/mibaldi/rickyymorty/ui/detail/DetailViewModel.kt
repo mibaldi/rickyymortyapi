@@ -1,0 +1,40 @@
+package com.mibaldi.rickyymorty.ui.detail
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.mibaldi.rickyymorty.domain.Error
+import com.mibaldi.rickyymorty.domain.MyCharacter
+import com.mibaldi.rickyymorty.usecases.GetCharacterUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class DetailViewModel @Inject constructor(private val getCharacterUseCase: GetCharacterUseCase): ViewModel() {
+
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> = _state.asStateFlow()
+
+
+    fun getCharacter(id: Int){
+        viewModelScope.launch {
+            getCharacterUseCase.getCharacter(id)
+                .fold(
+                    ifLeft = {cause -> _state.update { it.copy(error = cause) }},
+                    ifRight = {result ->
+                        _state.update { UiState(myCharacter = result) }
+                    }
+                )
+        }
+    }
+
+    data class UiState(
+        val loading: Boolean = false,
+        val myCharacter: MyCharacter? = null,
+        val error: Error? = null
+    )
+}
