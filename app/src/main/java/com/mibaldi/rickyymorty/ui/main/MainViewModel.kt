@@ -2,7 +2,7 @@ package com.mibaldi.rickyymorty.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mibaldi.rickyymorty.domain.Character
+import com.mibaldi.rickyymorty.domain.MyCharacter
 import com.mibaldi.rickyymorty.domain.Info
 import com.mibaldi.rickyymorty.usecases.GetCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,12 +23,18 @@ class MainViewModel @Inject constructor(
     private val _info = MutableStateFlow<Info?>(null)
     val info: StateFlow<Info?> = _info.asStateFlow()
     init {
+        getCharaters(0)
+    }
+
+    fun getCharaters(page: Int,filter: Map<String,String>? = emptyMap()){
         viewModelScope.launch {
-            getCharactersUseCase.getCharacters(null)
+            val mapOfPage = mapOf(Pair("page", page.toString()))
+            val map = filter?.let { mapOfPage + filter } ?: mapOfPage
+            getCharactersUseCase.getCharacters(map)
                 .fold(
                     ifLeft = {cause -> _state.update { it.copy(error = cause) }},
                     ifRight = {result ->
-                        _state.update { UiState(characters = result.results) }
+                        _state.update { UiState(myCharacters = result.results) }
                         _info.update { result.info }
                     }
                 )
@@ -36,7 +42,7 @@ class MainViewModel @Inject constructor(
     }
     data class UiState(
         val loading: Boolean = false,
-        val characters: List<Character>? = null,
+        val myCharacters: List<MyCharacter>? = null,
         val error: Error? = null
     )
 

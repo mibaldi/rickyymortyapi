@@ -2,7 +2,7 @@ package com.mibaldi.rickyymorty.domain
 
 data class Result(
     val info: Info,
-    val results: List<Character>
+    val results: List<MyCharacter>
 )
 data class Info(
     val count: Int,

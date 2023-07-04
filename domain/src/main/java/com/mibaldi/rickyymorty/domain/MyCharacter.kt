@@ -1,6 +1,6 @@
 package com.mibaldi.rickyymorty.domain
 
-data class Character(
+data class MyCharacter(
     val id: Int = 0,
     val name: String,
     val status: String,

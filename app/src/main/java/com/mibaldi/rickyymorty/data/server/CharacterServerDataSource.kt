@@ -3,7 +3,7 @@ package com.mibaldi.rickyymorty.data.server
 import arrow.core.Either
 import com.mibaldi.rickyymorty.data.datasource.CharacterRemoteDataSource
 import com.mibaldi.rickyymorty.data.tryCall
-import com.mibaldi.rickyymorty.domain.Character
+import com.mibaldi.rickyymorty.domain.MyCharacter
 import com.mibaldi.rickyymorty.domain.Error
 import com.mibaldi.rickyymorty.domain.Info
 import com.mibaldi.rickyymorty.domain.Location
@@ -23,8 +23,8 @@ class CharacterServerDataSource @Inject constructor(private val remoteService: R
     private fun RemoteInfo.toDomainModel(): Info{
         return Info(count,pages,next,prev)
     }
-    private fun RemoteCharacter.toDomainModel(): Character{
-        return Character(id,name,status,species,type,gender,origin.toDomainModel(),location.toDomainModel(),image,episode,url,created)
+    private fun RemoteCharacter.toDomainModel(): MyCharacter{
+        return MyCharacter(id,name,status,species,type,gender,origin.toDomainModel(),location.toDomainModel(),image,episode,url,created)
     }
     private fun RemoteLocation.toDomainModel(): Location {
         return Location(name,url)
