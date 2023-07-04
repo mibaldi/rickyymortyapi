@@ -9,4 +9,10 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="light_gray">#E0E0E0</color>
+    <color name="alive">#416CDA31</color>
+    <color name="dead">#41F64232</color>
+    <color name="unknown">#41000000</color>
+
+
+
 </resources>

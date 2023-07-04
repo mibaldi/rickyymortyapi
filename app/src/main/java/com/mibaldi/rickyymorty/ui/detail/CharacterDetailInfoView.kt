@@ -3,6 +3,7 @@ package com.mibaldi.rickyymorty.ui.detail
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.net.toUri
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import com.mibaldi.rickyymorty.domain.MyCharacter
@@ -29,7 +30,10 @@ class CharacterDetailInfoView @JvmOverloads constructor(
             appendLine(type)
 
             bold { append("Episode: ") }
-            append(episode.toString())
+            append(episode.map {
+                val segments = it.toUri().path?.split("/")
+                segments?.last()
+            }.toString())
         }
     }
 }
