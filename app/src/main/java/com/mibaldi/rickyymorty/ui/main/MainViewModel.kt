@@ -1,5 +1,8 @@
 package com.mibaldi.rickyymorty.ui.main
 
+import android.util.Log
+import android.view.View
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mibaldi.rickyymorty.domain.MyCharacter
@@ -20,30 +23,90 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> = _state.asStateFlow()
-    private val _info = MutableStateFlow<Info?>(null)
-    val info: StateFlow<Info?> = _info.asStateFlow()
+    private var lastFilterMap = mapOf<String,String>()
+
+    private val _pages = MutableStateFlow<Pages>(Pages())
+    val pages: StateFlow<Pages> = _pages.asStateFlow()
+
+
+    private var currentPage = 1
+    var isLastPage = false
+
     init {
         getCharaters(1)
     }
 
-    fun getCharaters(page: Int,filter: Map<String,String>? = emptyMap()){
+    fun getCharaters(page: Int,filter: Map<String,String>? = null){
         viewModelScope.launch {
-            val mapOfPage = mapOf(Pair("page", page.toString()))
-            val map = filter?.let { mapOfPage + filter } ?: mapOfPage
-            getCharactersUseCase.getCharacters(map)
+            val generateFilters = generateFilters(filter)
+            _state.value = _state.value.copy(loading = true)
+            getCharactersUseCase.getCharacters(page,generateFilters)
                 .fold(
                     ifLeft = {cause -> _state.update { it.copy(error = cause) }},
                     ifRight = {result ->
                         _state.update { UiState(myCharacters = result.results) }
-                        _info.update { result.info }
+                        pagesGenerator(result.info)
+                        _state.value = _state.value.copy(loading = false)
                     }
                 )
         }
+    }
+
+
+    private fun pagesGenerator(infoResponse:Info){
+        Log.d("INFO",infoResponse.toString())
+        _pages.update { it.copy(prev = true,next = true) }
+
+        if (infoResponse.prev.isNullOrEmpty()) {
+            currentPage = 1
+            _pages.update { it.copy(prev = false) }
+        }
+        if (infoResponse.next.isNullOrEmpty()){
+            _pages.update { it.copy(next = false) }
+        }
+        if (infoResponse.next.isNullOrEmpty() && !infoResponse.prev.isNullOrEmpty()) {
+            val page = infoResponse.prev?.toUri()?.getQueryParameter("page") ?: "0"
+            currentPage = page.toInt() + 1
+            isLastPage = true
+            _pages.update { it.copy(next = false) }
+
+        } else {
+            val page = infoResponse.next?.toUri()?.getQueryParameter("page") ?: "2"
+            currentPage = page.toInt() - 1
+            isLastPage = false
+        }
+        _pages.update { it.copy(page= currentPage) }
+    }
+
+    fun loadNextItems(){
+        if (!isLastPage){
+            getCharaters(currentPage+1)
+        } else {
+            _pages.update { it.copy(next = false) }
+        }
+    }
+    fun loadPrevItems(){
+        if (currentPage != 1){
+            getCharaters(currentPage-1)
+        } else {
+            _pages.update { it.copy(prev = false) }
+        }
+    }
+    private fun generateFilters(options:Map<String,String>?): Map<String,String>{
+        if (options != null){
+            lastFilterMap = options
+        }
+        return lastFilterMap
     }
     data class UiState(
         val loading: Boolean = false,
         val myCharacters: List<MyCharacter>? = null,
         val error: Error? = null
+    )
+    data class Pages(
+        val prev:Boolean = false,
+        val next: Boolean = false,
+        val page: Int = 1
     )
 
 }

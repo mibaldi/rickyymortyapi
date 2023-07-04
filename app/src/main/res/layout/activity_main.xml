@@ -13,11 +13,22 @@
             type="boolean" />
 
         <variable
+            name="prev"
+            type="boolean" />
+
+        <variable
+            name="next"
+            type="boolean" />
+
+        <variable
             name="characters"
             type="List&lt;MyCharacter>" />
 
         <variable
             name="error"
+            type="String" />
+        <variable
+            name="page"
             type="String" />
     </data>
 
@@ -36,13 +47,16 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="@string/app_name" />
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:title="@string/app_name"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </com.google.android.material.appbar.AppBarLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_marginBottom="50dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -51,8 +65,7 @@
                 android:layout_height="match_parent"
                 app:items="@{characters}"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-
-                app:spanCount="3"
+                app:spanCount="4"
                 app:visible="@{ error == null }" />
         </LinearLayout>
 
@@ -72,6 +85,36 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
             android:textColor="?attr/colorError"
             android:text="@{error}"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:weightSum="3">
+            <Button
+                android:id="@+id/btnPrev"
+                android:text="prev"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                app:pageVisible="@{prev}"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="@{page}"
+                tools:text="Page 1"/>
+            <Button
+                android:id="@+id/btnNext"
+                android:text="next"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                app:pageVisible="@{next}"
 
+                android:layout_weight="1"/>
+        </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

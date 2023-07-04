@@ -11,9 +11,9 @@ import com.mibaldi.rickyymorty.domain.Result
 import javax.inject.Inject
 
 class CharacterServerDataSource @Inject constructor(private val remoteService: RemoteService): CharacterRemoteDataSource {
-    override suspend fun getCharacters(options: Map<String, String>?): Either<Error, Result> = tryCall {
+    override suspend fun getCharacters(page:Int,options: Map<String, String>?): Either<Error, Result> = tryCall {
         remoteService
-            .listOfCharacters(options)
+            .listOfCharacters(page,options)
             .toDomainModel()
     }
 

@@ -30,4 +30,5 @@ class CharacterAdapter(private val listener: (MyCharacter) -> Unit) :
             binding.product = product
         }
     }
+
 }
