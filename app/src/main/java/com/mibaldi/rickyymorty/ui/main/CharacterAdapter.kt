@@ -1,10 +1,8 @@
 package com.mibaldi.rickyymorty.ui.main
 
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mibaldi.rickyymorty.R
@@ -23,9 +21,9 @@ class CharacterAdapter(private val listener: (MyCharacter) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val product = getItem(position)
-        holder.bind(product)
-        holder.itemView.setOnClickListener { listener(product) }
+        val character = getItem(position)
+        holder.bind(character)
+        holder.itemView.setOnClickListener { listener(character) }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

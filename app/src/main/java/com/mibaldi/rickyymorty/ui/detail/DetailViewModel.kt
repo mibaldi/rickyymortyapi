@@ -22,13 +22,16 @@ class DetailViewModel @Inject constructor(private val getCharacterUseCase: GetCh
 
     fun getCharacter(id: Int){
         viewModelScope.launch {
+            _state.value = _state.value.copy(loading = true)
             getCharacterUseCase.getCharacter(id)
                 .fold(
-                    ifLeft = {cause -> _state.update { it.copy(error = cause) }},
+                    ifLeft = {cause -> _state.update { it.copy(error = cause, loading = false) }},
                     ifRight = {result ->
                         _state.update { UiState(myCharacter = result) }
                     }
                 )
+            _state.value = _state.value.copy(loading = false)
+
         }
     }
 

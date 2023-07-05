@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mibaldi.rickyymorty.domain.MyCharacter
 
 @BindingAdapter("items")
-fun RecyclerView.setItems(products: List<MyCharacter>?) {
-    if (products != null) {
-        (adapter as? CharacterAdapter)?.submitList(products)
+fun RecyclerView.setItems(characters: List<MyCharacter>?) {
+    if (characters != null) {
+        (adapter as? CharacterAdapter)?.submitList(characters)
     }
 }
 @BindingAdapter("pageVisible")

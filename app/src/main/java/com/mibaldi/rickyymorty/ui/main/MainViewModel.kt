@@ -53,7 +53,6 @@ class MainViewModel @Inject constructor(
 
 
     private fun pagesGenerator(infoResponse:Info){
-        Log.d("INFO",infoResponse.toString())
         _pages.update { it.copy(prev = true,next = true) }
 
         if (infoResponse.prev.isNullOrEmpty()) {
@@ -64,13 +63,16 @@ class MainViewModel @Inject constructor(
             _pages.update { it.copy(next = false) }
         }
         if (infoResponse.next.isNullOrEmpty() && !infoResponse.prev.isNullOrEmpty()) {
-            val page = infoResponse.prev?.toUri()?.getQueryParameter("page") ?: "0"
+            val segments = infoResponse.prev?.split("?page=")
+            val page = segments?.last() ?: "0"
+
             currentPage = page.toInt() + 1
             isLastPage = true
             _pages.update { it.copy(next = false) }
 
         } else {
-            val page = infoResponse.next?.toUri()?.getQueryParameter("page") ?: "2"
+            val segments = infoResponse.next?.split("?page=")
+            val page = segments?.last() ?: "2"
             currentPage = page.toInt() - 1
             isLastPage = false
         }
