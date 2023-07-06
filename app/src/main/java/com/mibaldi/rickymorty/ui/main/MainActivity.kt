@@ -37,6 +37,11 @@ class MainActivity : AppCompatActivity(){
             binding.characters = it.myCharacters
             binding.error = it.error?.let(::errorToString)
         }
+        launchAndCollect(viewModel.info){
+            it?.let {
+                viewModel.pagesGenerator(it)
+            }
+        }
         launchAndCollect(viewModel.pages) {
             binding.prev = it.prev
             binding.next = it.next

@@ -14,7 +14,7 @@
             android:weightSum="2"
             android:padding="10dp">
             <TextView
-                android:text="StatusFilter:"
+                android:text="@string/statusfilter"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:textStyle="bold"
@@ -33,7 +33,7 @@
             android:weightSum="2"
             android:padding="10dp">
             <TextView
-                android:text="GenderFilter:"
+                android:text="@string/genderfilter"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:textStyle="bold"

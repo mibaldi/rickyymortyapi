@@ -10,4 +10,6 @@
     <string name="search">Search</string>
     <string name="filter">Filter</string>
     <string name="character_detail_image">Character detail image</string>
+    <string name="statusfilter">StatusFilter:</string>
+    <string name="genderfilter">GenderFilter:</string>
 </resources>

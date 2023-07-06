@@ -21,6 +21,8 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> = _state.asStateFlow()
+    private val _info = MutableStateFlow<Info?>(null)
+    val info: StateFlow<Info?> = _info.asStateFlow()
     private var lastFilterMap = mapOf<String,String>()
 
     private val _pages = MutableStateFlow(Pages())
@@ -43,15 +45,13 @@ class MainViewModel @Inject constructor(
                     ifLeft = {cause -> _state.update { it.copy(error = cause, loading = false) }},
                     ifRight = {result ->
                         _state.update { UiState(myCharacters = result.results) }
-                        pagesGenerator(result.info)
+                        _info.value = result.info
                         _state.value = _state.value.copy(loading = false)
                     }
                 )
         }
     }
-
-
-    private fun pagesGenerator(infoResponse:Info){
+    fun pagesGenerator(infoResponse:Info){
         _pages.update { it.copy(prev = true,next = true) }
 
         if (infoResponse.prev.isNullOrEmpty()) {
