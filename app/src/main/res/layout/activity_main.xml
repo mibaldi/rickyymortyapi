@@ -6,7 +6,7 @@
     <data>
         <import type="java.util.List" />
 
-        <import type="com.mibaldi.rickyymorty.domain.MyCharacter" />
+        <import type="com.mibaldi.rickymorty.domain.MyCharacter" />
 
         <variable
             name="loading"
@@ -93,7 +93,7 @@
             android:weightSum="3">
             <Button
                 android:id="@+id/btnPrev"
-                android:text="prev"
+                android:text="@string/prev"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 app:pageVisible="@{prev}"
@@ -109,7 +109,7 @@
                 tools:text="Page 1"/>
             <Button
                 android:id="@+id/btnNext"
-                android:text="next"
+                android:text="@string/next"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 app:pageVisible="@{next}"

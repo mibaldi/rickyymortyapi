@@ -1,7 +1,13 @@
 <resources>
-    <string name="app_name">RickyYMorty</string>
+    <string name="app_name">RickYMorty</string>
 
     <string name="connectivity_error">connectivity_error</string>
     <string name="server_error">server_error</string>
     <string name="unknown_error">unknown_error</string>
+    <string name="apply_filter">Apply Filter</string>
+    <string name="prev">prev</string>
+    <string name="next">next</string>
+    <string name="search">Search</string>
+    <string name="filter">Filter</string>
+    <string name="character_detail_image">Character detail image</string>
 </resources>

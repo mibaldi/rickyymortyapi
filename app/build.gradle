@@ -1,4 +1,4 @@
-import com.mibaldi.rickyymorty.buildsrc.Libs
+import com.mibaldi.rickymorty.buildsrc.Libs
 
 plugins {
     id 'com.android.application'
@@ -10,17 +10,17 @@ plugins {
 }
 
 android {
-    namespace 'com.mibaldi.rickyymorty'
+    namespace 'com.mibaldi.rickymorty'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.mibaldi.rickyymorty"
+        applicationId "com.mibaldi.rickymorty"
         minSdk 29
         targetSdk 33
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "com.mibaldi.rickyymorty.di.HiltTestRunner"
+        testInstrumentationRunner "com.mibaldi.rickymorty.di.HiltTestRunner"
     }
 
     buildTypes {
@@ -64,7 +64,7 @@ dependencies {
     implementation Libs.AndroidX.Room.runtime
     implementation Libs.AndroidX.Room.ktx
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     kapt Libs.AndroidX.Room.compiler
 

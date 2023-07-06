@@ -1,4 +1,4 @@
-import com.mibaldi.rickyymorty.buildsrc.Libs
+import com.mibaldi.rickymorty.buildsrc.Libs
 
 plugins {
     id 'java-library'
