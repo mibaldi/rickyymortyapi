@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.mibaldi.rickymorty.databinding.ActivityDetailBinding
+import com.mibaldi.rickymorty.ui.common.errorToString
 import com.mibaldi.rickymorty.ui.common.launchAndCollect
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +24,8 @@ class DetailActivity : AppCompatActivity() {
         val characterID = intent.extras?.getInt("characterID") ?: 0
         viewModel.getCharacter(characterID)
         launchAndCollect(viewModel.state){
+            binding.loading = it.loading
+            binding.error = it.error?.let(::errorToString)
             if (it.myCharacter != null){
                 binding.character = it.myCharacter
             }

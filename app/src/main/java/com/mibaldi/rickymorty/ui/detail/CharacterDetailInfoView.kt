@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.net.toUri
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
+import com.mibaldi.rickymorty.R
 import com.mibaldi.rickymorty.domain.MyCharacter
 
 class CharacterDetailInfoView @JvmOverloads constructor(
@@ -17,25 +18,25 @@ class CharacterDetailInfoView @JvmOverloads constructor(
     fun setCharacter(character: MyCharacter) = character.apply {
         text = buildSpannedString {
 
-            bold { append("Status: ") }
+            bold { append(context.getString(R.string.status)) }
             appendLine(status)
 
-            bold { append("Species: ") }
+            bold { append(context.getString(R.string.species)) }
             appendLine(species)
 
-            bold { append("Gender: ") }
+            bold { append(context.getString(R.string.gender)) }
             appendLine(gender)
 
-            bold { append("Type: ") }
+            bold { append(context.getString(R.string.type)) }
             appendLine(type)
 
-            bold { append("Origin: ") }
+            bold { append(context.getString(R.string.origin)) }
             appendLine(origin.name)
 
-            bold { append("Location: ") }
+            bold { append(context.getString(R.string.location)) }
             appendLine(location.name)
 
-            bold { append("Episode: ") }
+            bold { append(context.getString(R.string.episode)) }
             append(episode.map {
                 val segments = it.toUri().path?.split("/")
                 segments?.last()

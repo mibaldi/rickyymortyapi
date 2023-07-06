@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(){
         launchAndCollect(viewModel.pages) {
             binding.prev = it.prev
             binding.next = it.next
-            binding.page = "PAGE: ${it.page}"
+            binding.page = "${getString(R.string.page)} ${it.page}"
         }
 
         binding.btnNext.setOnClickListener {

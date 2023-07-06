@@ -19,7 +19,6 @@ class DetailViewModel @Inject constructor(private val getCharacterUseCase: GetCh
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> = _state.asStateFlow()
 
-
     fun getCharacter(id: Int){
         viewModelScope.launch {
             _state.value = _state.value.copy(loading = true)
@@ -31,7 +30,6 @@ class DetailViewModel @Inject constructor(private val getCharacterUseCase: GetCh
                     }
                 )
             _state.value = _state.value.copy(loading = false)
-
         }
     }
 
